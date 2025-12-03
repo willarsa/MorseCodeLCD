@@ -31,11 +31,11 @@ struct tuple{
 
 tuple<String, String> ones[2]= {{"e","."},{"t","_"}};
 tuple<String, String> twos[4]= {{"n","_."},{"a","._"},{"i",".."},{"m","__"}};
-tuple<String, String> threes[8]= {{"s","..."},{"o","___"},{"g","__."},{"u",".._"},{"w",".__"},{"d","_.."},{"r",".__"},{"k","_._"}};
+tuple<String, String> threes[8]= {{"s","..."},{"o","___"},{"g","__."},{"u",".._"},{"w",".__"},{"d","_.."},{"r","._."},{"k","_._"}};
 tuple<String, String> fours[12]= {{"h","...."},{"z","__.."},{"v","..._"},{"t","__._"},{"j",".___"},{"b","_..."},{"l","._.."},{"c","_._."},{"f",".._."},{"y","_.__"},{"p",".__."},{"x","_.._"}};
 
 unsigned long time_since_last_click = 0;
-static bool last_state = HIGH;
+static bool last_state = LOW;
 String current_seq = "";
 String current_word = "";
 const int unit = 500;
@@ -81,13 +81,13 @@ void loop() {
     lcd.setCursor(0, 0);
     lcd.print(current_word);
   }
-  /*if(current_time - time_since_last_click > 5 * unit && current_word.charAt(current_word.length() - 1) != " ") {
+  if(current_time - time_since_last_click > 7 * unit && current_word.length() != 0 && current_word.charAt(current_word.length() - 1) != ' ') {
     current_word += " ";
     current_seq = "";
     lcd.clear();
     lcd.setCursor(0, 0);
     lcd.print(current_word); 
-  }*/
+  }
 
   bool curr_state = digitalRead(buttonPin);
 
