@@ -38,7 +38,7 @@ unsigned long time_since_last_click = 0;
 static bool last_state = HIGH;
 String current_seq = "";
 String current_word = "";
-const int unit = 750;
+const int unit = 500;
 unsigned long start_time = 0;
 
 void setup() {
@@ -74,22 +74,28 @@ String return_char(String seq){
 
 void loop() {
   unsigned long current_time = millis();
-  if((current_time - time_since_last_click > 5 * unit && current_seq.length() > 0) || current_seq.length() == 4){
+  if((current_time - time_since_last_click > 3 * unit && current_seq.length() > 0) || current_seq.length() == 4){
     current_word += return_char(current_seq);
-    if(current_time - time_since_last_click > 5 * unit) current_word += " ";
     current_seq = "";
     lcd.clear();
     lcd.setCursor(0, 0);
     lcd.print(current_word);
   }
+  /*if(current_time - time_since_last_click > 5 * unit && current_word.charAt(current_word.length() - 1) != " ") {
+    current_word += " ";
+    current_seq = "";
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print(current_word); 
+  }*/
 
   bool curr_state = digitalRead(buttonPin);
 
-  if(last_state == HIGH && curr_state == LOW){
+  if(last_state == LOW && curr_state == HIGH){
     start_time = millis();
   }
 
-  if(last_state == LOW && curr_state == HIGH){
+  if(last_state == HIGH && curr_state == LOW){
     unsigned long end_time = millis() - start_time;
 
     //Check what time tick its in.
